@@ -99,7 +99,7 @@ module Rack
           subject { [FaradayAdapter, logger, formatter, :request_bodies] }
 
           it 'should log the request body' do
-            expect(last_request['body']).to eq '{"a":1}'
+            expect(last_request['body']).to eq({"a" => 1})
           end
 
         end
@@ -150,7 +150,7 @@ module Rack
           subject { [FaradayAdapter, logger, formatter, :response_bodies ] }
 
           it 'should log the response headers' do
-            expect(last_response['body']).to eq '{"a":1}'
+            expect(last_response['body']).to eq({"a" => 1})
           end
 
         end

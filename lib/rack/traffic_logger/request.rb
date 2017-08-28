@@ -88,7 +88,13 @@ module Rack
         body = Zlib::GzipReader.new(StringIO.new body).read if encoding == 'gzip'
         body.force_encoding 'UTF-8'
         if body.valid_encoding?
-          hash['body'] = body
+          unless body.start_with? '<!DOCTYPE html>'
+            hash['body'] = begin
+                            JSON.parse body
+                          rescue JSON::ParserError
+                            body
+                          end
+          end
         else
           hash['body_base64'] = [body].pack 'm0'
         end

@@ -74,7 +74,7 @@ module Rack
         subject { TL.new TL::Echo.new, logger, TL::Formatter::JSON.new, :request_bodies }
 
         it 'should log the request body' do
-          expect(last_request['body']).to eq '{"a":1}'
+          expect(last_request['body']).to eq({"a" => 1})
         end
 
       end
@@ -138,7 +138,7 @@ module Rack
         subject { TL.new TL::Echo.new, logger, TL::Formatter::JSON.new, :response_bodies }
 
         it 'should log the response headers' do
-          expect(last_response['body']).to eq '{"foo":"bar"}'
+          expect(last_response['body']).to eq({"foo" => "bar"})
         end
 
         describe 'that are compressed' do
@@ -146,7 +146,7 @@ module Rack
           before { subject.call mock_env :post, '/', {'Accept-Encoding' => 'gzip'}, JSON.generate({hello: :goodbye}) }
 
           it 'should decompress the result' do
-            expect(last_response['body']).to eq '{"hello":"goodbye"}'
+            expect(last_response['body']).to eq({"hello" => "goodbye"})
           end
 
         end
